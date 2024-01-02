@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Add any additional styling here */
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title text-center">Login</h2>
+                        <form id="loginForm" action="/validate_login" method="POST">
+                            <div class="form-group">
+                                <label for="id">ID</label>
+                                <input type="text" class="form-control" id="id" name="id" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Login</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            fetch('/validate_login', {
+                method: 'POST',
+                body: new FormData(document.getElementById('loginForm'))
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('Login successful!');
+                    window.location.href = '/user_info';
+                    // Redirect to a new page or perform other actions on successful login
+                } else {
+                    alert('Invalid credentials! Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+        });
+
+    </script>
+</body>
+</html>

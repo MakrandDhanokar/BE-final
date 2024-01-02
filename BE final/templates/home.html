@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Live Streaming and Attendance</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom CSS */
+        .stream-container {
+            margin-top: 20px;
+        }
+
+        #video_stream {
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 20px;
+        }
+
+        .status-container {
+            margin-top: 20px;
+        }
+
+        .database-container {
+            margin-top: 20px;
+        }
+
+        /* Optional: Additional CSS customization */
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="mt-4 mb-4">Live Streaming and Attendance</h1>
+
+        <div class="row">
+            <div class="col-md-3">
+                <!-- Buttons for Admin and Employee -->
+                <div class="btn-group-vertical" role="group">
+                    <button type="button" class="btn btn-primary mb-2" onclick="signIn('admin')">Admin</button>
+                    <button type="button" class="btn btn-primary" onclick="signIn('employee')">Employee</button>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <!-- Video streaming section -->
+                <div class="stream-container">
+                    <img id="video_stream" src="{{ url_for('video_feed') }}" alt="Video Stream" />
+                </div>
+            </div>
+        </div>
+
+        <div class="status-container">
+            <!-- Displaying new employee attendance status -->
+            <h2>New Employee Attendance Status:</h2>
+            <p id="attendance_status"></p>
+        </div>
+
+        <div class="database-container">
+            <!-- Database display -->
+            <div class="row">
+                <div class="col">
+                    <h2>Employee Attendance Database:</h2>
+                    <table id="database_table" class="table table-bordered">
+                        <!-- Your database content will go here -->
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Functions for simulation (replace with your backend logic)
+        function signIn(userType) {
+            if (userType === 'admin') {
+                console.log('Admin signed in');
+            } else if (userType === 'employee') {
+                console.log('Employee signed in');
+            }
+        }
+
+        function updateAttendanceStatus(status) {
+            document.getElementById('attendance_status').innerText = status;
+        }
+
+        function updateDatabase(data) {
+            let tableContent = '<thead><tr><th>Employee ID</th><th>Time Marked</th></tr></thead><tbody>';
+            for (let record of data) {
+                tableContent += `<tr><td>${record.employeeID}</td><td>${record.timeMarked}</td></tr>`;
+            }
+            tableContent += '</tbody>';
+            document.getElementById('database_table').innerHTML = tableContent;
+        }
+
+        // Example: Update attendance status and database display
+        updateAttendanceStatus('Employee ID: 123 Detected');
+        const exampleData = [
+            { employeeID: '123', timeMarked: '2023-11-15 09:00:00' },
+            { employeeID: '456', timeMarked: '2023-11-15 09:15:00' }
+            // Add more records as needed
+        ];
+        updateDatabase(exampleData);
+    </script>
+
+</body>
+
+</html>

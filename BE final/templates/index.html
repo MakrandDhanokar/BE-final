@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Streamlining Workforce Management System</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f7f7f7; /* Change background color as per your choice */
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        #video_stream {
+            width: 100%;
+            height: 300px;
+            border-bottom: 2px solid #333; /* Separator line for the camera screen */
+        }
+
+        .status-container {
+            height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        /* Optional: Additional CSS customization */
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="text-center mb-5">Streamline Workforce Management System</h1>
+
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-6 text-center">
+                <!-- Sign-in options -->
+                <h4>Sign-In Options</h4>
+                <div class="btn-group-vertical" role="group">
+                    <button type="button" class="btn btn-primary mb-2" onclick="openAdminPage()">Admin</button>
+                    <button type="button" class="btn btn-primary" onclick="redirectToLogin()">Employee</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Camera screen -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <img id="video_stream" src="{{ url_for('video_feed') }}" alt="Video Stream" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Database display -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0">Employee Attendance Database</h4>
+                    </div>
+                    <div class="card-body status-container">
+                        <table id="database_table" class="table table-bordered">
+                            <!-- Your database content will go here -->
+                            
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+    function signIn(userType) {
+        if (userType === 'admin') {
+            console.log('Admin signed in');
+        } else if (userType === 'employee') {
+            console.log('Employee signed in');
+        }
+    }
+
+    function redirectToLogin() {
+    window.location.href = '/login'; //
+}
+    function fetchAttendanceData() {
+        fetch('/attendance_data')
+            .then(response => response.text())
+            .then(data => {
+                const table = document.getElementById('database_table');
+                table.innerHTML = data; // Update the table content with fetched data
+            })
+            .catch(error => {
+                console.error('Error fetching attendance data:', error);
+            });
+    }
+
+    function openAdminPage() {
+        window.location.href = '/login_admin'; // Redirect to the endpoint displaying employee cards
+    }
+
+    // Fetch data every 5 seconds (adjust as needed)
+    setInterval(fetchAttendanceData, 5000);
+
+    // Initial fetch when the page loads
+    fetchAttendanceData();
+</script>
+
+</body>
+
+</html>

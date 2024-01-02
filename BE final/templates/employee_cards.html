@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Details</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Your custom styles -->
+    <style>
+        /* Add your styles here */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Employee Details</h1>
+
+        <div class="row">
+            {% for employee_id, employee_details in employee_data.items() %}
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        <a href="{{ url_for('info', employee_id=employee_id) }}" style="text-decoration: none; color: inherit;">
+                            <img src="{{ employee_details.image_url }}" class="card-img-top" alt="Employee Image">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ employee_details.id }}</h5>
+                                <!-- Other employee details -->
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Your custom scripts -->
+    <script>
+        // Add any custom JavaScript if required
+    </script>
+</body>
+</html>
